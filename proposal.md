@@ -24,11 +24,11 @@ To accomplish this, our dashboard will consist of 4 pages:
 
 ### Necessary Data
 
-- **Congress Trades Data**
+- **Congress Trades Data**: Information on trades made by members of Congress.
   - **Source:** [Senate Stock Watcher API](https://senatestockwatcher.com/api)
-- **S&P 500 Performance Data**
+- **S&P 500 Performance Data**: Closing prices of GSPC for calculating the daily cumulative returns.
   - **Source:** Yahoo Finance
-- **Committee Membership Data**
+- **Committee Membership Data**: The industry committees on which each Congress member serves for classifying trades as insider trading.
   - **Source:** [House of Representatives](https://www.house.gov/representatives) and [Senate Committees](https://www.senate.gov/committees/membership.htm)
 
 #### Final Datasets
