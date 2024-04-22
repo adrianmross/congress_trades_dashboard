@@ -18,7 +18,7 @@ To accomplish this, our dashboard will consist of 4 pages:
    - Comparison of the performance between the two parties and between Congressional members (who makes the best trades?)
    - Does their trading behavior coincide with any legislative changes? What is the average time difference between their trades and the release of new bills?
    - How do market participants react to news or disclosures related to Congress members' trading activities? (i.e. Is there a spike in stock price after the trades are reported? How do market volatility and trading volume change in response to Congress trades?
-   - How does the volume and frequency of trades vary over time?
+   - How do the volume and frequency of trades vary over time?
    - How do the returns of trades classified as insider trading compare to non-insider trades?
 4. **Trade analysis of individual Congress members** (drop-down menu for selecting individual Congress members)
 
