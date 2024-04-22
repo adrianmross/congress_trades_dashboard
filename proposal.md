@@ -4,7 +4,7 @@
 
 ### Research Question
 
-In this research, we are exploring the relationship between trading activities we have classified as insider trading by Congress members and the performance of the stocks involved. We will test the following hypotheses:
+In this research, we explore the relationship between trading activities we have classified as insider trading by Congress members and the performance of the stocks involved. We will test the following hypotheses:
 
 1. Congressional insider trading will consistently outperform the S&P 500. 
 2. The disclosure of trading activities by members of certain committees exerts varied impacts on stock performance. Specifically, committees associated with finance, healthcare, and technology wield a pronounced influence on the stocks they trade, resulting in notable price fluctuations following the revelation of such activities.
@@ -13,7 +13,7 @@ In this research, we are exploring the relationship between trading activities w
 
 Our research touches upon several intriguing and potentially impactful aspects that could pique the interest of a broader audience: 
 
-- **General Public**: Provides the extent to which elected officials are using privileged information for personal gain, thus prompting discussions on ethical standards and calls for stricter regulations.
+- **General Public**: Provides the extent to which elected officials use privileged information for personal gain, thus prompting discussions on ethical standards and calls for stricter regulations.
 - **Policy Makers**: Offers valuable data to inform the development of regulations aimed at curbing unethical trading practices among elected officials, thereby enhancing public trust in government institutions and maintaining a level playing field for all market participants.
 - **Individual Investors**: Offers potential insights into profitable investment opportunities and strategies by understanding the impact of Congressional insider trading on stock performance, empowering investors to make more informed decisions in financial markets.
 
@@ -46,7 +46,7 @@ To accomplish this, our dashboard will consist of 4 pages:
 
 | Dataset                         | Observation                                           | Sample Period                 | Sample Conditions                           | Necessary Variables                                                                                              |
 |---------------------------------|-------------------------------------------------------|-------------------------------|---------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **Daily Cumulative Returns for the S&P 500** | Each row represents the cumulative returns of the S&P 500 index up to the corresponding date. | 10 years before to the project’s due date (April 30, 2014 - Present) | None                                    | Date, S&P 500 Return, S&P 500 cumulative return                                                                |
+| **Daily Cumulative Returns for the S&P 500** | Each row represents the cumulative returns of the S&P 500 index up to the corresponding date. | 10 years before the project’s due date (April 30, 2014 - Present) | None                                    | Date, S&P 500 Return, S&P 500 cumulative return                                                                |
 | **Individual Trades per Congress Member**    | Each row represents a single trade made by a Congress member.                     | Same as above                 | Don’t include trades made outside of our sample period | Congress Member, Party Affiliation, Trade Date, Stock Traded (ticker), Trade Volume, Trade Amount, Trade Type (buy/sell), gsector, Committee(s) Served, Insider Trading Flag |
 | **Daily Cumulative Returns of All Trades per Congress Member** | Each row represents the cumulative returns of all trades made by a specific Congress member up to the corresponding date. | Same as above                 | Don’t include returns for trades made outside of our sample period | Congress Member, Date, Daily Return, Daily Cumulative Return, Committee(s) served                                |
 | **Daily Cumulative Returns of Insider Trades per Congress Member** | Each row represents the cumulative returns of insider trades made by a specific Congress member up to the corresponding date. | Same as above                 | Same as above                            | Congress Member, Date, Daily Return (Insider), Cumulative Daily Return (Insider), Insider Trading Flag           |
@@ -77,10 +77,23 @@ To accomplish this, our dashboard will consist of 4 pages:
 - Filter the trades dataset for insider trades based on the insider trading flag.
 - Repeat steps similar to Step 4, but only for the filtered insider trades dataset.
 
+**Step 6: Compare Ticker Performance on Days Pre/Post Disclosure
+- Obtain cumulative returns for tickers t-3 and t+3 of the event (financial disclosure of Congress member)
+- Compare cumulative returns, and if there is a substantial change, then flag the transaction.
+
 ### Dashboard Mockup
 ![Mockup](./mockup.svg)
 
+### Our Project Differentiators
+
+At the time of writing (04/24), our project will be different from some of the major research currently available in the following areas:
+
+1. Unusual Whales[^1] does not consider the "Conflict of Interest" factor in determining Congress members' overall returns. Extrapolating this will provide a new level of insight into how Congress members use their privileged position and knowledge to outperform the market.
+2. The New York Times article on Congress Stock Trades[^2] required a lot of manual research and lacked valuable insights into the extent of the issue by considering cumulative returns. By automating this research and calculating returns similar to Unusual Whales[^1], we are linking two powerful approaches to uncovering the extent of the issue.
+3. After a record rally in NVIDIA stock following a bet on the company by the spouse of former Speaker of the House Nancy Pelosi[^3], there is reason to be concerned about the potential market manipulation a public financial disclosure by a Congress member has on market performance. Therefore, our research will include an event study and analysis on this topic.
+
 ### Resources
-- [The Unusual Whales Congress Trading Report for 2023](https://unusualwhales.com/politics/article/congress-trading-report-2023)
+[^1]: [The Unusual Whales Congress Trading Report for 2023](https://unusualwhales.com/politics/article/congress-trading-report-2023)
+[^2]: [NYT Article: Stock Trades Reported by Nearly a Fifth of Congress Show Possible Conflicts](https://www.nytimes.com/interactive/2022/09/13/us/politics/congress-stock-trading-investigation.html)
+[^3]: [Benzinga Article: If You Invested With Pelosi](https://www.benzinga.com/general/education/24/02/37269006/if-you-invested-1-000-in-nvidia-stock-when-nancy-pelosi-and-her-husband-did-heres-how-much-youd)
 - [Tracking Congress Stock Trades In Python](https://entreprenerdly.com/tracking-congress-stock-trades-in-python/)
-- [Stock Trades Reported by Nearly a Fifth of Congress Show Possible Conflicts](https://www.nytimes.com/interactive/2022/09/13/us/politics/congress-stock-trading-investigation.html)
