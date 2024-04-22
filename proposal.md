@@ -4,7 +4,10 @@
 
 ### Research Question
 
-In this research, we are exploring the relationship between trading activities we have classified as insider trading by Congress members and the performance of the stocks involved. Our hypothesis is that Congressional insider trading will consistently outperform the S&P 500.
+In this research, we are exploring the relationship between trading activities we have classified as insider trading by Congress members and the performance of the stocks involved. We will test the following hypotheses:
+
+1. Congressional insider trading will consistently outperform the S&P 500. 
+2. The disclosure of trading activities by members of certain committees exerts varied impacts on stock performance. Specifically, committees associated with finance, healthcare, and technology wield a pronounced influence on the stocks they trade, resulting in notable price fluctuations following the revelation of such activities.
 
 #### Why This Project is Important
 
