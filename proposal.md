@@ -6,6 +6,8 @@
 
 In this research, we are exploring the relationship between trading activities we have classified as insider trading by Congress members and the performance of the stocks involved. Our hypothesis is that Congressional insider trading will consistently outperform the S&P 500.
 
+#### Relevance to Diverse Audiences
+
 Our research touches upon several intriguing and potentially impactful aspects that could pique the interest of a broader audience: 
 
 - **General Public**: Provides the extent to which elected officials are using privileged information for personal gain, thus prompting discussions on ethical standards and calls for stricter regulations.
