@@ -6,6 +6,12 @@
 
 In this research, we are exploring the relationship between trading activities we have classified as insider trading by Congress members and the performance of the stocks involved. Our hypothesis is that Congressional insider trading will consistently outperform the S&P 500.
 
+Our research touches upon several intriguing and potentially impactful aspects that could pique the interest of a broader audience: 
+
+- **General Public**: Provides the extent to which elected officials are using privileged information for personal gain, thus prompting discussions on ethical standards and calls for stricter regulations.
+- **Policy Makers**: Offers valuable data to inform the development of regulations aimed at curbing unethical trading practices among elected officials, thereby enhancing public trust in government institutions and maintaining a level playing field for all market participants.
+- **Individual Investors**: Offers potential insights into profitable investment opportunities and strategies by understanding the impact of Congressional insider trading on stock performance, empowering investors to make more informed decisions in financial markets.
+
 #### Dashboard
 
 To accomplish this, our dashboard will consist of 4 pages:
