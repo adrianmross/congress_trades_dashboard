@@ -35,7 +35,7 @@ To accomplish this, our dashboard will consist of 4 pages:
 
 | Dataset                         | Observation                                           | Sample Period                 | Sample Conditions                           | Necessary Variables                                                                                              |
 |---------------------------------|-------------------------------------------------------|-------------------------------|---------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **Daily Cumulative Returns for the S&P 500** | Each row represents the cumulative returns of the S&P 500 index up to the corresponding date. | 10 years prior to the project’s due date (April 30, 2014 - Present) | None                                    | Date, S&P 500 Return, S&P 500 cumulative return                                                                |
+| **Daily Cumulative Returns for the S&P 500** | Each row represents the cumulative returns of the S&P 500 index up to the corresponding date. | 10 years before to the project’s due date (April 30, 2014 - Present) | None                                    | Date, S&P 500 Return, S&P 500 cumulative return                                                                |
 | **Individual Trades per Congress Member**    | Each row represents a single trade made by a Congress member.                     | Same as above                 | Don’t include trades made outside of our sample period | Congress Member, Party Affiliation, Trade Date, Stock Traded (ticker), Trade Volume, Trade Amount, Trade Type (buy/sell), gsector, Committee(s) Served, Insider Trading Flag |
 | **Daily Cumulative Returns of All Trades per Congress Member** | Each row represents the cumulative returns of all trades made by a specific Congress member up to the corresponding date. | Same as above                 | Don’t include returns for trades made outside of our sample period | Congress Member, Date, Daily Return, Daily Cumulative Return, Committee(s) served                                |
 | **Daily Cumulative Returns of Insider Trades per Congress Member** | Each row represents the cumulative returns of insider trades made by a specific Congress member up to the corresponding date. | Same as above                 | Same as above                            | Congress Member, Date, Daily Return (Insider), Cumulative Daily Return (Insider), Insider Trading Flag           |
@@ -55,7 +55,7 @@ To accomplish this, our dashboard will consist of 4 pages:
 - Combine `house_representatives.csv` and `senate_representatives.csv` into a single `congress_members.csv` dataset.
 - Merge `individual_trades.csv` with `congress_members.csv` to associate each trade with a congress member's details, particularly the committee.
 - Filter trades within the required date range.
-- Determine insider trading flag: If committee matches gsector, flagged as insider trading.
+- Determine insider trading flag: If the committee matches gsector, flagged as insider trading.
 
 **Step 4: Calculate Cumulative Returns of All Trades Per Congress Member**
 - Calculate daily returns for each stock traded by Congress members using `daily_stocks_prices.csv`.
