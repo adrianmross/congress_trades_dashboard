@@ -5,6 +5,8 @@ __pycache__/
 
 # C extensions
 *.so
+stock_prices.csv
+.DS_Store
 
 # Distribution / packaging
 .Python
