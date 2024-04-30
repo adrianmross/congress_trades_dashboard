@@ -1,3 +1,10 @@
+# Project specific files
+stock_prices.csv
+working_files
+
+# MacOS
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -5,8 +12,6 @@ __pycache__/
 
 # C extensions
 *.so
-stock_prices.csv
-.DS_Store
 
 # Distribution / packaging
 .Python
