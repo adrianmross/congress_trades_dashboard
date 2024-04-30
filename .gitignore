@@ -1,6 +1,7 @@
 # Project specific files
 stock_prices.csv
-working_files
+all_trade_returns/
+insider_trade_returns/
 
 # MacOS
 .DS_Store
