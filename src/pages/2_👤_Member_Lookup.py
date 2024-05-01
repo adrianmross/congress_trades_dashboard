@@ -1,8 +1,12 @@
+from email.mime import image
+from logging import info
 import os
 import pandas as pd
 import numpy as np
 import streamlit as st
 import wikipedia as wp
+import requests
+import bs4
 import plotly.express as px
 
 st.set_page_config(page_title="Member Lookup", 
@@ -36,6 +40,14 @@ def load_congress_data():
     data = pd.read_csv(path, parse_dates=["date"], index_col=["name", "date"])
     return data
 
+@st.cache_resource
+def load_trades_data():
+    path = "transactions.csv"
+    if not os.path.exists(path):
+        path = f"https://github.com/adrianmross/congress_trades_dashboard/raw/main/data/inputs/{path}"
+    data = pd.read_csv(path)
+    return data
+
 # Function to plot cumulative returns
 @st.cache_data
 def plot_cumulative_returns(data, title, x_label, y_label, color=None):
@@ -52,6 +64,7 @@ def filterdata(df, member_selected):
 
 sp500_data = load_sp500_data()
 congress_data = load_congress_data()
+trades_data = load_trades_data()
 
 sp500_cut = sp500_data.copy()
 congress_cut = congress_data.copy()
@@ -112,19 +125,62 @@ with row1_2:
 
     st.plotly_chart(fig)
 
+def get_info_dict(page):
+    response = requests.get(page.url)
+    soup = bs4.BeautifulSoup(response.text, 'html')
+    infobox = soup.find('table', {'class': 'infobox'})
+    return infobox
+
+def get_image_from_infobox(infobox):
+    image = info_dict.find('img')['src']
+    return "https:"+image
+
 if search_query is not None:
     st.write("### Member Details")
 
-    row2_1, row2_2, row2_3 = st.columns((1, 2, 3))
-    result = wp.search("Congress member" + search_query, results=1)
-    page = wp.page(result[0])
-    # st.write(page.url)
-    # infoboxes = pd.read_html(page.url, match='Infobox', index_col=0)
-    # infobox = infoboxes[0]
-    image = page.images[0]
-    st.write(image)
+    row2_1, row2_2, row2_3 = st.columns((1.25, 2, 3))
+    
+    try:
+        result = wp.search("Congress member" + search_query, results=1)
+        page = wp.page(result[0])
+    except:
+        pass
+
     with row2_1:
-        st.image(image, use_column_width=True)
+        try:
+            info_dict = get_info_dict(page)
+            image = get_image_from_infobox(info_dict)
+            st.image(image, use_column_width=True)
+            df = pd.read_html(str(info_dict))[0].copy()
+        except:
+            st.write("No information found for this member.")
+            # df = pd.DataFrame()
+
+        st.write(f"### {search_query}")
+
+        try:
+            # political party
+            political_party_row_index = df[df.iloc[:, 0].str.contains('Political party', na=False)].index[0]
+            political_party = df.iloc[political_party_row_index, 1]
+            st.write(f"**Political Party:** {political_party}")
+        except:
+            st.write("Political party not found.")
+
+    with row2_2:
+        try:
+            st.write("#### Biography")
+            st.write(wp.summary("Congress member" + search_query, sentences=4))
+        except:
+            pass
+
+    with row2_3:
+        # get list of trades
+        trades = trades_data[trades_data["name"] == search_query].copy()
+        st.write("#### Recent Trades")
+        st.write(trades)
+
+
+    # st.write(df)
 
 
 
