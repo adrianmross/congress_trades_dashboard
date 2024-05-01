@@ -1,9 +1,8 @@
-from cProfile import label
 import os
-from tkinter import Place
 import pandas as pd
 import numpy as np
 import streamlit as st
+import wikipedia as wp
 import plotly.express as px
 
 st.set_page_config(page_title="Member Lookup", 
@@ -54,11 +53,9 @@ def filterdata(df, member_selected):
 sp500_data = load_sp500_data()
 congress_data = load_congress_data()
 
-sp500_cut = sp500_data.loc["2020-01-01":].copy()
-sp500_cut["cum_return"] = (1 + sp500_cut["daily_return"]).cumprod() - 1
+sp500_cut = sp500_data.copy()
+congress_cut = congress_data.copy()
 
-congress_cut = congress_data.loc["2020-01-01":].copy()
-congress_cut["cum_return"] = (1 + congress_cut["return"]).groupby("name").cumprod() - 1
 congress_cut = congress_cut.drop("Donald S. Beyer, Jr.", level="name")
 
 # Autocomplete search feature
@@ -76,8 +73,6 @@ with row1_1:
     ranking.index.name = "Rank"
     st.write(ranking)
 
-
-
 with row1_2:
     # search_query = st.selectbox("Search for a Congress member", options=congress_names, format_func=lambda x: x)
     # blank option for search
@@ -93,9 +88,16 @@ with row1_2:
     if search_query is not None:
         congress_member_data =  filterdata(congress_cut, search_query)
 
+        # Get earliest date for the member
+        earliest_date = congress_member_data.index.get_level_values('date').min()
+
+        # Filter S&P500 data to match the earliest date for the member
+        sp500_cut = sp500_cut.loc[earliest_date:].copy()
+        sp500_cut["cum_return"] = (1 + sp500_cut["daily_return"]).cumprod() - 1
+
         # Plotting the cumulative returns
         fig = px.line(congress_member_data.reset_index(), x="date", y="cum_return", 
-                    title=f"{search_query} Cumulative Returns", labels={"cum_return": "Cumulative Return", "date": "Date"},
+                    title=f"{search_query} v. S&P500 Cumulative Returns", labels={"cum_return": "Cumulative Return", "date": "Date"},
                         color="name")
         # rename title in legend to "series"
         fig.update_layout(legend_title_text="Series")
@@ -109,3 +111,20 @@ with row1_2:
         fig.update_layout(legend_title_text="Member")
 
     st.plotly_chart(fig)
+
+if search_query is not None:
+    st.write("### Member Details")
+
+    row2_1, row2_2, row2_3 = st.columns((1, 2, 3))
+    result = wp.search("Congress member" + search_query, results=1)
+    page = wp.page(result[0])
+    # st.write(page.url)
+    # infoboxes = pd.read_html(page.url, match='Infobox', index_col=0)
+    # infobox = infoboxes[0]
+    image = page.images[0]
+    st.write(image)
+    with row2_1:
+        st.image(image, use_column_width=True)
+
+
+
