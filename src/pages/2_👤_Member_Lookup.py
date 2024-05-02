@@ -15,7 +15,6 @@ st.set_page_config(page_title="Member Lookup",
                    )
 
 st.markdown("# Congress Member Lookup")
-st.sidebar.header("Plotting")
 st.write(
     """
     This page allows you to search for a specific Congress member and view their returns.
