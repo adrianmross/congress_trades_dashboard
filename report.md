@@ -62,6 +62,11 @@ We then use `yahoo_fin` Python library to help use pull the stock's daily adjust
 to April 29 2024.  Then we calculate daily returners using pct_change and cumulative returns using `cumprod`and fill in NA 
 values with 0.  
 
+$$
+\text{Daily Return} = \frac{\text{Price}_{t} - \text{Price}_{t-1}}{\text{Price}_{t-1}}
+$$
+
+
 ### Committee Data
 
 `get_house_data.ipynb` and `get_senate_data.ipynb`, with `house_committees.csv` and `senators_committees.csv`, are the scripts 
@@ -80,28 +85,31 @@ on a direct mapping and therefore relied on our interpretation of the committees
 
 ### Calculating Returns
 
-#### Calculation of Cumulative Returns
-1. **Average Transaction Amount**: For transactions specifying a range of values (e.g., $1,001 - $15,000), an average amount was calculated by taking the midpoint of the specified range. This provided a standardized value for each transaction, aiding in more accurate portfolio valuation.
+#### Cumulative Returns
 
-2. **Stock Data Retrieval**: For each unique ticker involved in the transactions, historical stock price data was fetched from Yahoo Finance using the `get_data` function. The data spanned from the date of the earliest transaction to the present.
+`cal_cum_returns.ipynb` and `congress_returns.csv`: This section describes how we calculated the cumulative returns for each Congress member and for the group as a whole:
 
-3. **Daily Returns Calculation**: Daily returns for each stock were computed based on the adjusted close prices. The formula used was:
-
+- We initially loaded our transaction data from `transactions.csv`. While attempting to download closing prices for the stock tickers, we encountered issues with certain tickers. To manage this, we utilized try/catch blocks to log problematic tickers in a text file named `bad_tickers` located in `src/inputs`. As the project evolved, we recognized that not all stocks, particularly options or stocks traded before 2014 (which are beyond the scope of our project), required data downloads. Consequently, we deleted the Jupyter Notebook and the `stock_prices.csv` file associated with this data but retained the `bad_tickers.csv` as it may be useful in the future.
+- We identified that some problematic stocks were from private companies or had been delisted or taken private. For simplicity, we excluded these stocks from our analysis as it would be impossible to calculate their returns. 
+- **We removed sell transactions that did not have a preceding buy transaction for the same ticker by the same individual, as this absence makes it impossible to accurately calculate returns.**
+- Our transaction data does not contain exact trade amounts but rather a range, such as $1,001 - $15,000. We decided to calculate the average of these ranges to use as the transaction amount.
+- Next, we fetched the closing prices for each stock associated with the individuals in our transaction table. This was achieved through a function named `process_portfolio`, which takes an individual's name and the transactions dataframe as parameters. Within this function, we called `get_portfolio_return`. This function processes a dataframe containing all of an individual's transactions, sorted by transaction_date, and another dataframe with the daily closing prices of every unique stock they have traded from the earliest transaction date until April 29, 2024.
+`get_portfolio_return` constructs each person’s portfolio in a dataframe, starting from their earliest transaction date. The portfolio dataframe includes columns for all the unique stocks they traded, in addition to `cash`, `total`, `cash_flow`, and `return`. We iterated through each row in the portfolio:
+  - We updated the stock positions based on the associated daily returns. If no daily return was found (e.g., weekends or holidays), it was set to 0.
+  - We checked for any transactions made on the current date. If yes, we save it in transactions. We then iterate through every row in`transactions`: 
+    -  If it’s a purchase, we increase the value of the corresponding stock position. If the amount of capital they use to purchase the stock is less than or equal to their current cash balance, we simply subtract it from their cash balance. If the amount is larger, we update the `cash_flow` variable for the current date to be equal to ($amount - cash_balance$).
+    - If it’s a sell, we limit the capital they get out of it to their existing position for the stock. This is to eliminate the profits they made from the trades that are not recorded in our data.
+  - After processing all transactions for the current date, we calculated the total portfolio value and computed the daily return using the time-weighted return formula: 
 $$
-\text{Daily Return} = \frac{\text{Price}_{t} - \text{Price}_{t-1}}{\text{Price}_{t-1}}
-$$
-
-4. **Portfolio Valuation**: A portfolio dataframe was constructed with columns representing each stock, cash holdings, and total portfolio value. Each row represented a day from the start date of the earliest transaction to the present.
-
-5. **Transaction Effect on Portfolio**: Transactions were applied sequentially, updating stock holdings and cash balances appropriately. Purchases decreased cash holdings and increased stock positions, while sales did the reverse.
-
-6. **Daily and Cumulative Returns Calculation**: The daily return was calculated using Time Weight Return with the following formula:
-
-$$
-\text{Daily Return} = \frac{\text{Total Value}_{t} - \text{Total Value}_{t-1} - \text{Cash Flow}_{t}}{\text{Total Value}_{t-1} + \text{Cash Flow}_{t}}
+   \text{Daily Return} = \frac{\text{Total Value}_{t} - \text{Total Value}_{t-1} - \text{Cash Flow}_{t}}{\text{Total Value}_{t-1} + \text{Cash Flow}_{t}}
 $$
 
-Cumulative returns were then computed as the running product of (1 + daily return), subtracting 1 to reflect the overall return relative to the initial value.
+  - Please note: we initially included transactions starting from 2012, which was beyond our intended scope. This error was corrected by recalculating the cumulative returns starting from 2014 when graphing the data in Streamlit.
+- The process took ~10 HOURS to complete! We saved the portfolio data for each individual in `data/working_files/all_trade_returns`. Due to the large file size, we compressed it into `all_trade_returns.zip` and backed-up to DropBox.
+
+#### Insider Returns
+
+`cal_insider_returns.ipynb` and `insider_returns.csv`: This notebook is similar to `cal_cum_returns` but specifically targets insider-marked transactions. Instead of using transactions.csv, we used `insider_marked_trades.csv` which includes an additional column indicating whether a transaction is an insider trade (`is_insider = True`). An extra filtering step was applied to only include insider transactions. The portfolio data for each person is saved in `data/working_files/insider_trade_returns`, and a zipped version is available as `insider_trade_returns.zip`.
 
 
 ### Marking Insider Trades
