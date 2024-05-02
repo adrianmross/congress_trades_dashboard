@@ -23,7 +23,11 @@ To run the project, you will need to install the Python packages in `requirement
 
 ## Report
 
-This report investigates congressional stock trades, focusing on whether lawmakers achieve abnormally high returns, how their political affiliations may influence their trading decisions, and the impact of their committee memberships on investment choices in specific industries. This project responds to a decline in public trust in government officials and examines the effects of the STOCK Act of 2012. The research tests hypotheses concerning the performance of congressional insider trading against the S&P 500 and the influence of committee-related trades on stock performance. Using various data sources and computational methods, the study processes and analyzes transaction data to calculate cumulative returns and assess performance. Initial findings suggest that while the average returns from Congressional and insider-flagged trades do not consistently outperform the market, top insiders show significant outperformance, indicating potential insider advantages. The report concludes with a call for further investigation and stricter regulations on Congressional trading.
+This report investigates congressional stock trades, focusing on whether lawmakers achieve abnormally high returns, how their political affiliations may influence their trading decisions, and the impact of their committee memberships on investment choices in specific industries. This project responds to a decline in public trust in government officials and examines the effects of the STOCK Act of 2012. 
+
+The research tests hypotheses concerning the performance of congressional insider trading against the S&P 500 and the influence of committee-related trades on stock performance. Using various data sources and computational methods, the study processes and analyzes transaction data to calculate cumulative returns and assess performance. 
+
+Initial findings suggest that while the average returns from Congressional and insider-flagged trades do not consistently outperform the market, top insiders show significant outperformance, indicating potential insider advantages. The report concludes with a call for further investigation and stricter regulations on Congressional trading.
 
 Attached in this repository is the [full report](./report.md)
 
