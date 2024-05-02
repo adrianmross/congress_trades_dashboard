@@ -17,6 +17,8 @@ st.markdown("""
 - **Appendix** is a report that explains our processes and analysis
 """)
 
+st.image('https://gifdb.com/images/high/among-us-you-sus-u8fste8nhdv38svd.webp', width=300)
+
 st.sidebar.success("Select a page above.")
 
 st.markdown(
