@@ -9,9 +9,8 @@ st.write("# Welcome to the Sus' Congress Trades Project!")
 
 st.write("##### Brought to you by: The Inside Indexers")
 
-st.write("## Performance of U.S. Congressional Insider Trades Dashboard 🇺🇸")
 st.markdown("""
-### Outline
+### Pages:
 - **Congress v. Market** compares the S&P 500 to Congress members' average cumulative returns
 - **Member Lookup** does the same thing, but you can isolate specific congress members and view all their trades
 - **EDA** allows you to explore the data and see the impact of Congress members' disclosures on the industry
