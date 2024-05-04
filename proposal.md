@@ -82,7 +82,7 @@ To accomplish this, our dashboard will consist of 4 pages:
 - Compare cumulative returns, and if there is a substantial change, then flag the transaction.
 
 ### Dashboard Mockup
-![Mockup](./mockup.svg)
+![Mockup](images/mockup.svg)
 
 ### Our Project Differentiators
 
